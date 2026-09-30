@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Belajar TAV Kelas 11</title>
+<style>
+:root{--bg:#f4f6fb;--c:#fff;--t:#14213d;--m:#5b6785;--p:#2b59ff;--a:#ffb703;--ok:#1a9c5a;--no:#d6342c;--b:#dde3f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1326;--c:#172040;--t:#eef2ff;--m:#9aa6c7;--p:#6f8cff;--b:#28345c}}
+:root[data-theme=dark]{--bg:#0d1326;--c:#172040;--t:#eef2ff;--m:#9aa6c7;--p:#6f8cff;--b:#28345c}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--t);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+#app{max-width:760px;margin:auto;padding:16px}
+h1{font-size:1.6rem;margin:.2em 0}h2{font-size:1.25rem;margin:.3em 0}
+.hero{background:linear-gradient(135deg,#2b59ff,#7a3cff);color:#fff;border-radius:18px;padding:20px;margin-bottom:14px}
+.hero p{margin:.3em 0 0;opacity:.9}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.card{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:12px;cursor:pointer;text-align:left;color:var(--t);font:inherit}
+.card b{display:block;font-size:.92rem;line-height:1.25}.card span{font-size:1.6rem}
+.btn{background:var(--p);color:#fff;border:0;border-radius:12px;padding:12px 16px;font:inherit;font-weight:600;cursor:pointer}
+.btn.alt{background:var(--a);color:#222}.btn.ghost{background:transparent;color:var(--p);border:1px solid var(--p)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.row .btn{flex:1;min-width:130px}
+.box{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:16px;margin:10px 0}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px;border-radius:12px;border:2px solid var(--b);background:var(--c);color:var(--t);font:inherit;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:rgba(26,156,90,.15)}.opt.no{border-color:var(--no);background:rgba(214,52,44,.15)}
+input{width:100%;padding:12px;border-radius:12px;border:2px solid var(--b);background:var(--c);color:var(--t);font:inherit;margin:6px 0}
+.m{color:var(--m);font-size:.9rem}.fb{font-weight:600;margin:8px 0}.fb.ok{color:var(--ok)}.fb.no{color:var(--no)}
+.pl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.pl i{font-style:normal;padding:4px 10px;border-radius:99px;background:var(--c);border:1px solid var(--b);font-size:.85rem}.pl i.on{background:var(--a);color:#222;border-color:var(--a);font-weight:700}
+.bar{height:6px;background:var(--b);border-radius:9px;overflow:hidden}.bar div{height:100%;background:var(--p)}
+.back{background:none;border:0;color:var(--p);font:inherit;font-weight:600;cursor:pointer;padding:6px 0}
+</style></head><body><div id="app"></div>
+<script>
+// Format soal PG: "Pertanyaan|A|B|C|D|indeks jawaban benar(0-3)". Isian/Tebakan: "Pertanyaan|jawaban1/jawaban2"
+const S=[
+{n:"Penerapan Rangkaian Elektronika",i:"⚡",m:"Hukum Ohm: V = I × R. Dioda menyearahkan arus AC menjadi DC (penyearah setengah gelombang, gelombang penuh, jembatan). Transistor BJT punya 3 kaki: Basis, Kolektor, Emitor, dipakai sebagai saklar atau penguat. Kapasitor menyimpan muatan dan menghaluskan riak tegangan pada catu daya.",
+q:["Rumus Hukum Ohm adalah...|V = I × R|P = V × R|I = V × R|R = I / V|0","Penyearah jembatan gelombang penuh memakai dioda sebanyak...|1|2|4|6|2","Kaki transistor BJT yang bertugas sebagai pengendali adalah...|Kolektor|Basis|Emitor|Anoda|1"],
+f:["Satuan hambatan listrik adalah...|ohm"],t:["Aku mengalir tanpa terlihat, satuanku ampere. Siapa aku?|arus listrik/arus"]},
+{n:"Pemrograman, Mikroprosesor & Mikrokontroler",i:"🤖",m:"Mikrokontroler adalah chip berisi CPU, memori, dan I/O (contoh ATmega328P pada Arduino Uno). Program Arduino punya dua fungsi utama: setup() berjalan sekali, loop() berulang terus. digitalWrite() mengatur pin HIGH/LOW, analogWrite() menghasilkan PWM. Mikroprosesor hanya CPU, butuh memori dan I/O eksternal.",
+q:["Fungsi Arduino yang dijalankan hanya sekali saat mulai adalah...|loop()|setup()|main()|start()|1","Perintah untuk menyalakan pin digital adalah...|digitalWrite|analogRead|delay|Serial.read|0","Tegangan logika HIGH pada Arduino Uno adalah...|1,8 V|3 V|5 V|12 V|2"],
+f:["Fungsi Arduino yang berjalan berulang-ulang adalah...|loop"],t:["Aku otak mungil dalam satu chip: ada CPU, memori, dan I/O. Siapa aku?|mikrokontroler"]},
+{n:"Perencanaan & Instalasi Sistem Audio Video",i:"🔊",m:"Instalasi audio video mencakup perencanaan kebutuhan, pemilihan kabel dan konektor, serta penempatan perangkat. Kabel RCA kuning membawa video komposit, merah/putih audio kiri-kanan. HDMI membawa audio dan video digital sekaligus. Speaker berimpedansi 4 atau 8 ohm: dua speaker 8 Ω paralel menjadi 4 Ω.",
+q:["Kabel RCA berwarna kuning membawa sinyal...|Audio kiri|Audio kanan|Video komposit|Daya|2","Dua speaker 8 Ω dipasang paralel, impedansinya menjadi...|16 Ω|8 Ω|4 Ω|2 Ω|2","Konektor yang membawa audio dan video digital sekaligus adalah...|VGA|RCA|HDMI|BNC|2"],
+f:["HDMI kepanjangan dari High-Definition Multimedia ...|interface"],t:["Aku bergetar untuk bersuara, tanpa mulut aku bicara. Siapa aku?|speaker/pengeras suara/loudspeaker"]},
+{n:"Penerapan Sistem Radio & Televisi",i:"📡",m:"Modulasi adalah proses menumpangkan sinyal informasi ke gelombang pembawa. AM memodulasi amplitudo, FM memodulasi frekuensi. Siaran radio FM berada di 88–108 MHz. Indonesia beralih ke televisi digital terestrial dengan standar DVB-T2. Antena menangkap gelombang elektromagnetik dari pemancar.",
+q:["Rentang frekuensi siaran radio FM adalah...|88–108 MHz|530–1600 kHz|470–862 MHz|2,4 GHz|0","Standar TV digital terestrial di Indonesia adalah...|NTSC|PAL|DVB-T2|SECAM|2","Menumpangkan informasi ke gelombang pembawa disebut...|Demodulasi|Modulasi|Rektifikasi|Osilasi|1"],
+f:["FM kepanjangan dari Frequency ...|modulation"],t:["Aku berdiri di atap untuk menangkap gelombang udara. Siapa aku?|antena"]},
+{n:"Perawatan & Perbaikan Peralatan Audio Video",i:"🛠️",m:"Langkah aman memperbaiki: cabut dari sumber listrik, kuras muatan kapasitor, kenali gejala, lalu lacak kerusakan (troubleshooting) dari catu daya. Multimeter mengukur tegangan, arus, dan hambatan. Solder menyambung komponen dengan timah. Kapasitor elektrolit yang menggembung tanda rusak.",
+q:["Langkah pertama sebelum membongkar perangkat elektronik adalah...|Menyolder|Mencabut dari sumber listrik|Mengganti IC|Mengukur arus|1","Alat ukur tegangan, arus, dan hambatan adalah...|Osiloskop|Multimeter|Solder|Tang|1","Kapasitor elektrolit menggembung menandakan...|Normal|Baru|Rusak|Ukuran besar|2"],
+f:["Alat untuk menyambung komponen dengan timah adalah...|solder"],t:["Aku punya probe merah dan hitam, bisa ukur volt dan ohm. Siapa aku?|multimeter/avometer"]},
+{n:"Bahasa Indonesia",i:"📖",m:"Teks eksposisi berstruktur tesis, argumentasi, dan penegasan ulang. Teks prosedur berisi tujuan dan langkah berurutan. Surat lamaran kerja memuat pembuka, identitas, alasan melamar, dokumen terlampir, dan penutup. Gunakan kata baku sesuai KBBI dan EYD/PUEBI.",
+q:["Struktur teks eksposisi adalah...|Orientasi–komplikasi–resolusi|Tesis–argumentasi–penegasan ulang|Tujuan–langkah|Judul–isi|1","Kata baku yang benar adalah...|analisa|analisis|anilisis|analises|1","Surat lamaran kerja ditujukan kepada...|Teman|Pimpinan/HRD perusahaan|Guru|Tetangga|1"],
+f:["Kata baku dari 'aktifitas' adalah...|aktivitas"],t:["Makin diasah makin cerdas, bukan pisau. Aku ada di kepala. Siapa aku?|otak"]},
+{n:"Bahasa Inggris",i:"🌍",m:"Simple past tense untuk kejadian lampau: S + V2 (built, wrote, repaired). Procedure text: goal, materials, steps (First, Then, Finally). Job application letter memakai salam pembuka Dear Sir/Madam dan penutup Yours sincerely. Kosakata teknik: cable, wire, voltage, circuit.",
+q:["Past tense dari 'build' adalah...|builded|built|building|builds|1","'Please ___ the power before repairing.' Yang tepat...|turn off|turned|turning|turns|0","Penutup surat lamaran formal yang tepat...|See you|Bye|Yours sincerely|Thanks bro|2"],
+f:["Bahasa Inggris dari 'kabel' adalah...|cable/wire"],t:["What has keys but cannot open a door?|keyboard/piano"]},
+{n:"Matematika",i:"📐",m:"Barisan aritmetika: Un = a + (n−1)b. Trigonometri: sin 30° = 1/2, cos 60° = 1/2, sin 90° = 1. Jumlah sudut segitiga 180°. Fungsi linear y = mx + c. Eksponen: aⁿ berarti a dikali n kali.",
+q:["Suku ke-5 barisan 2, 5, 8, ... adalah...|11|14|17|20|1","Nilai sin 30° adalah...|1|1/2|√3/2|0|1","Jumlah sudut dalam segitiga adalah...|90°|180°|270°|360°|1"],
+f:["Hasil dari 3² + 4² adalah...|25"],t:["Aku punya tiga sisi dan tiga sudut, jumlah sudutku 180°. Siapa aku?|segitiga"]},
+{n:"Sejarah",i:"🏛️",m:"Budi Utomo berdiri 20 Mei 1908 (Kebangkitan Nasional). Sumpah Pemuda diikrarkan 28 Oktober 1928. Proklamasi Kemerdekaan dibacakan 17 Agustus 1945 oleh Soekarno-Hatta; teks diketik Sayuti Melik. Soekarno adalah presiden pertama RI.",
+q:["Budi Utomo didirikan pada tahun...|1908|1928|1945|1966|0","Teks proklamasi diketik oleh...|Soekarno|Hatta|Sayuti Melik|Ahmad Soebardjo|2","Sumpah Pemuda diikrarkan pada...|17 Agustus 1945|28 Oktober 1928|20 Mei 1908|1 Juni 1945|1"],
+f:["Presiden pertama Republik Indonesia adalah...|soekarno/sukarno/bung karno"],t:["Aku merah putih, berkibar tiap 17 Agustus. Siapa aku?|bendera/sang saka merah putih"]},
+{n:"PJOK",i:"🏃",m:"Prinsip latihan FITT: Frequency, Intensity, Time, Type. Pemanasan mencegah cedera. Denyut nadi maksimal = 220 − usia. Cedera ringan ditangani dengan RICE: Rest, Ice, Compression, Elevation. Kebugaran jasmani perlu dilatih teratur.",
+q:["FITT adalah singkatan dari...|Frequency, Intensity, Time, Type|Fast, Idle, Train, Trim|Food, Iron, Time, Track|Fit, Fun, Team, Test|0","Tujuan utama pemanasan adalah...|Menambah lelah|Mencegah cedera|Menurunkan nadi|Bersantai|1","Huruf 'I' pada RICE berarti...|Injury|Ice|Increase|Immune|1"],
+f:["Denyut nadi maksimal = 220 dikurangi ...|usia/umur"],t:["Aku bulat, ditendang-tendang di lapangan hijau. Siapa aku?|bola/sepak bola"]},
+{n:"Kreativitas, Inovasi & Kewirausahaan",i:"💡",m:"Wirausaha memulai dari ide bisnis lalu menganalisis dengan SWOT (Strengths, Weaknesses, Opportunities, Threats). Bauran pemasaran 4P: Product, Price, Place, Promotion. Laba = pendapatan − biaya. BEP (Break Even Point) adalah titik impas saat untung dan rugi sama dengan nol.",
+q:["Unsur SWOT yang berasal dari luar usaha adalah...|Strengths & Weaknesses|Opportunities & Threats|Strengths & Threats|Weaknesses & Opportunities|1","Yang bukan bagian 4P adalah...|Product|Price|Place|Profit|3","BEP disebut juga...|Titik impas|Titik jenuh|Titik laba|Titik modal|0"],
+f:["Laba = pendapatan dikurangi ...|biaya"],t:["Di titikku untung dan rugi sama-sama nol. Siapa aku?|bep/titik impas"]},
+{n:"Koding & Kecerdasan Artifisial",i:"🧠",m:"Algoritma adalah langkah logis menyelesaikan masalah. Dasar koding: variabel, percabangan (if-else), perulangan (for, while), fungsi. Kecerdasan Artifisial (AI) meniru kemampuan manusia; machine learning belajar dari data. Gunakan AI secara etis dan cek kebenarannya.",
+q:["Struktur untuk mengulang perintah adalah...|if|for/while|print|import|1","Machine learning belajar dari...|Data|Baterai|Kabel|Layar|0","AI kepanjangan dari...|Automatic Input|Artificial Intelligence|Advanced Internet|Analog Interface|1"],
+f:["Langkah logis penyelesaian masalah disebut...|algoritma"],t:["Aku menyimpan nilai dan isiku bisa berganti. Siapa aku?|variabel"]}
+];
+const B=[
+["1|Besaran & Hukum Ohm|Tegangan (V), arus (I), dan hambatan (R) dihubungkan oleh V = I × R. Resistor dirangkai seri (Rt = R1+R2) atau paralel (1/Rt = 1/R1 + 1/R2).","1|Dioda & Catu Daya|Dioda hanya melewatkan arus satu arah. Catu daya: trafo → penyearah → filter kapasitor → regulator (7805 menghasilkan 5 V).","2|Transistor|BJT ada tipe NPN dan PNP. Sebagai saklar, arus kecil di basis mengatur arus besar kolektor-emitor.","2|Penguat & Osilator|Penguat menaikkan amplitudo sinyal tanpa mengubah bentuknya. Op-Amp dan IC 555 dipakai untuk penguat dan pembangkit pulsa."],
+["1|Dasar Algoritma & Arduino|Alur program digambarkan dengan flowchart. Arduino IDE dipakai menulis sketch lalu meng-upload ke board lewat USB.","1|Input/Output Digital|pinMode(pin, OUTPUT) menyetel keluaran; digitalRead membaca tombol. LED diberi resistor ±220 Ω agar arus aman.","2|Sensor & ADC|analogRead mengubah tegangan 0–5 V menjadi angka 0–1023 (ADC 10 bit). Contoh sensor: LDR, LM35, HC-SR04.","2|PWM, Servo & Serial|analogWrite (0–255) mengatur terang LED atau kecepatan motor. Serial.begin(9600) menampilkan data ke Serial Monitor."],
+["1|K3 & Perencanaan|Utamakan K3: APD, kabel rapi, sumber listrik aman. Perencanaan meliputi survei ruangan, denah, dan daftar kebutuhan alat.","1|Kabel & Konektor|Konektor umum: RCA, jack 3,5 mm, XLR, HDMI, VGA. Kabel balance (XLR) lebih tahan derau dari unbalance.","2|Sound System|Rantai sinyal: sumber → mixer → power amplifier → speaker. Daya amplifier disesuaikan dengan speaker.","2|Video & CCTV|Proyektor/TV dihubungkan via HDMI. CCTV terdiri dari kamera, DVR/NVR, kabel, dan monitor."],
+["1|Gelombang & Spektrum|Frekuensi (Hz) = getaran per detik. Panjang gelombang λ = c / f dengan c = 3×10⁸ m/s.","1|Pemancar & Penerima Radio|Pemancar: osilator, modulator, penguat daya, antena. Penerima superheterodyne: RF, mixer, IF, demodulator, penguat audio.","2|Sistem Televisi|Sinyal TV membawa video dan audio. Analog memakai PAL; digital memakai DVB-T2 dengan gambar lebih jernih.","2|Antena & Set Top Box|Antena Yagi terarah dan cocok untuk sinyal lemah. Set Top Box mengubah siaran digital agar tampil di TV analog."],
+["1|Keselamatan & Alat Ukur|Gunakan APD dan kerjakan perangkat dalam keadaan mati. Multimeter mengukur V, I, R; osiloskop menampilkan bentuk sinyal.","1|Solder & Desolder|Solder dipanaskan ±300–350 °C. Sambungan bagus tampak mengilap; desoldering pump/wick melepas timah.","2|Troubleshooting|Urutan: identifikasi gejala → cek catu daya → lacak blok rangkaian → ganti komponen → uji fungsi.","2|Perbaikan Amplifier & TV|Amplifier berdengung biasanya dari filter catu daya. TV mati total sering karena power supply atau kapasitor rusak."],
+["1|Teks Eksposisi & Prosedur|Eksposisi menyampaikan gagasan dengan argumen dan fakta. Prosedur menjelaskan langkah berurutan, cocok untuk manual perangkat.","1|Surat Lamaran & CV|Surat lamaran memakai bahasa formal dan sopan. CV memuat data diri, pendidikan, pengalaman, keterampilan.","2|Laporan & Berita|Laporan praktik: pendahuluan, alat bahan, langkah, hasil, kesimpulan. Berita menjawab 5W+1H.","2|Presentasi & Debat|Presentasi baik itu singkat, runtut, komunikatif. Debat menuntut argumen logis dan sikap menghargai."],
+["1|Simple Present & Past|Simple present untuk fakta (The amplifier boosts the signal). Simple past untuk kejadian lampau (I repaired the radio).","1|Procedure Text|Struktur: goal, materials, steps. Pakai kalimat perintah: Connect the cable, Turn on the switch.","2|Job Application & Interview|Siapkan letter of application, CV, dan jawaban interview seperti 'Tell me about yourself'.","2|Technical Vocabulary|Kosakata: resistor, capacitor, circuit, voltage, current, speaker, antenna, soldering."],
+["1|Barisan & Deret|Aritmetika: Un = a+(n−1)b; Sn = n/2 (2a+(n−1)b). Geometri: Un = a·r^(n−1).","1|Eksponen & Logaritma|aᵐ × aⁿ = aᵐ⁺ⁿ. Logaritma: ᵃlog b = c berarti aᶜ = b.","2|Trigonometri|sin = depan/miring, cos = samping/miring, tan = depan/samping. Sudut istimewa: 30°, 45°, 60°.","2|Statistika & Peluang|Mean = jumlah data ÷ banyak data. Peluang = kejadian diinginkan ÷ semua kejadian."],
+["1|Pergerakan Nasional|Budi Utomo (1908) memulai organisasi modern. Sumpah Pemuda (1928) menegaskan satu tanah air, bangsa, dan bahasa.","1|Masa Pendudukan Jepang|Jepang menduduki Indonesia 1942–1945; lahir PETA dan BPUPKI.","2|Proklamasi & Mempertahankan Kemerdekaan|Proklamasi 17 Agustus 1945 di Jl. Pegangsaan Timur 56. Perjuangan lewat perang dan diplomasi (Linggarjati, Renville, KMB).","2|Masa Demokrasi|Demokrasi Liberal (1950–1959), Demokrasi Terpimpin, Orde Baru, lalu Reformasi 1998."],
+["1|Kebugaran Jasmani|Komponen: daya tahan jantung-paru, kekuatan otot, kelentukan, komposisi tubuh. Diukur dengan tes lari atau multistage.","1|Permainan Bola Besar|Bola voli: servis, passing bawah/atas, smash. Sepak bola dan basket menekankan kerja sama tim.","2|Gizi & Gaya Hidup Sehat|Gizi seimbang: karbohidrat, protein, lemak, vitamin, mineral, air. Hindari rokok dan narkoba.","2|Pertolongan Pertama|Prinsip P3K: aman diri, aman lingkungan, aman korban. Kenali RICE untuk cedera otot dan sendi."],
+["1|Karakter Wirausaha|Ciri wirausaha: kreatif, berani ambil risiko, disiplin, gigih, jeli melihat peluang.","1|Ide & Peluang Usaha|Ide dicari dari masalah sehari-hari, lalu diuji dengan SWOT dan riset pasar sederhana.","2|Rencana Bisnis & Keuangan|Rencana bisnis memuat produk, target pasar, pemasaran, proyeksi keuangan. Hitung HPP, laba, dan BEP.","2|Pemasaran Digital|Manfaatkan media sosial dan marketplace. Foto menarik dan deskripsi jelas meningkatkan penjualan."],
+["1|Berpikir Komputasional|Empat pilar: dekomposisi, pengenalan pola, abstraksi, algoritma.","1|Dasar Pemrograman Python|Variabel, tipe data, if-else, for, while. Contoh: print('Halo').","2|Dasar Kecerdasan Artifisial|AI mencakup machine learning, computer vision, dan NLP. Model dilatih dari data lalu memprediksi.","2|Etika & Pemanfaatan AI|Periksa hasil AI, jaga privasi data, jangan menjiplak. AI adalah alat bantu, bukan pengganti belajar."]];
+const st='stroke="currentColor" stroke-width="3" fill="none"';
+const G=[["Resistor","Membatasi arus. Satuan ohm (Ω). Nilainya dibaca dari gelang warna.",`<svg viewBox="0 0 120 60"><path d="M5 30h25M90 30h25" ${st}/><rect x="30" y="18" width="60" height="24" rx="10" fill="#d9b382"/><rect x="42" y="18" width="5" height="24" fill="#d33"/><rect x="52" y="18" width="5" height="24" fill="#93c"/><rect x="62" y="18" width="5" height="24" fill="#742"/><rect x="76" y="18" width="5" height="24" fill="#db3"/></svg>`],
+["Kapasitor Elektrolit","Menyimpan muatan, menghaluskan tegangan. Berpolaritas (kaki panjang +). Satuan farad (F).",`<svg viewBox="0 0 120 70"><path d="M52 45v22M68 45v22" ${st}/><rect x="38" y="4" width="44" height="42" rx="4" fill="#1d3d8a"/><rect x="38" y="4" width="10" height="42" fill="#ccd"/></svg>`],
+["Dioda","Melewatkan arus satu arah. Garis silver pada bodi menandai katoda (−).",`<svg viewBox="0 0 120 60"><path d="M5 30h30M85 30h30" ${st}/><rect x="35" y="21" width="50" height="18" rx="3" fill="#222"/><rect x="72" y="21" width="6" height="18" fill="#ccc"/></svg>`],
+["Transistor BJT (TO-92)","Saklar atau penguat. Tiga kaki: Basis, Kolektor, Emitor.",`<svg viewBox="0 0 120 70"><path d="M48 40v27M60 40v27M72 40v27" ${st}/><path d="M38 8h44v22a22 22 0 0 1-44 0z" fill="#222"/></svg>`],
+["LED","Dioda pemancar cahaya. Kaki panjang = anoda (+). Wajib diberi resistor seri.",`<svg viewBox="0 0 120 70"><path d="M52 50v18M68 50v12" ${st}/><path d="M42 45V25a18 18 0 0 1 36 0v20z" fill="#ff4d4d"/><rect x="38" y="45" width="44" height="5" fill="#c33"/></svg>`],
+["Speaker","Mengubah sinyal listrik menjadi getaran suara. Impedansi umum 4 Ω atau 8 Ω.",`<svg viewBox="0 0 120 70"><rect x="25" y="22" width="20" height="26" fill="#444"/><polygon points="45,22 90,6 90,64 45,48" fill="#777"/></svg>`],
+["Antena Yagi","Antena terarah untuk menerima siaran TV/radio dari jarak jauh.",`<svg viewBox="0 0 120 70"><path d="M15 35h95M30 12v46M46 20v30M62 22v26M78 24v22M94 26v18" ${st}/></svg>`]];
+const $=s=>document.querySelector(s),app=$('#app');
+const nm=s=>s.toLowerCase().replace(/[^a-z0-9]/g,'');
+const sh=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+const pg=(s,k)=>s.q.map(x=>{const p=x.split('|');return{q:p[0],o:p.slice(1,5),a:+p[5],k}});
+const fi=(s,k,z)=>s[z].map(x=>{const p=x.split('|');return{q:(z=='t'?'🧩 Tebak: ':'✍️ ')+p[0],a:p[1],k}});
+const all=s=>[...pg(s,s.n),...fi(s,s.n,'f'),...fi(s,s.n,'t')];
+
+function home(){app.innerHTML=`<div class="hero"><h1>⚡ Belajar TAV Kelas 11</h1><p>Teknik Audio Video · Kurikulum Merdeka · Fase F</p></div>
+<div class="row"><button class="btn" onclick="ujian()">📝 Simulasi Ujian</button><button class="btn ghost" onclick="galeri()">🔌 Galeri Komponen</button></div><div class="row"><button class="btn" onclick="setup(false)">🎯 Kuis Acak</button><button class="btn alt" onclick="setup(true)">👥 Main Bersama</button></div>
+<h2>Pilih Mata Pelajaran</h2><div class="grid">${S.map((s,i)=>`<button class="card" onclick="subj(${i})"><span>${s.i}</span><b>${s.n}</b></button>`).join('')}</div>`;scrollTo(0,0)}
+
+function subj(i){const s=S[i];app.innerHTML=`<button class="back" onclick="home()">← Beranda</button><h1>${s.i} ${s.n}</h1>
+<div class="box"><h2>📚 Ringkasan</h2><p>${s.m}</p></div>${[1,2].map(k=>`<h2>📖 Semester ${k}</h2>`+B[i].map(x=>x.split("|")).filter(x=>x[0]==k).map((x,n)=>`<details class="box"><summary><b>Bab ${n+1+(k-1)*2}: ${x[1]}</b></summary><p>${x[2]}</p></details>`).join("")).join("")}
+<div class="row"><button class="btn" onclick="play(pg(S[${i}],''),['Kamu'],'Latihan Pilihan Ganda',()=>subj(${i}))">📝 Pilihan Ganda</button>
+<button class="btn ghost" onclick="play(fi(S[${i}],'','f'),['Kamu'],'Latihan Isian',()=>subj(${i}))">✍️ Isian</button>
+<button class="btn alt" onclick="play(fi(S[${i}],'','t'),['Kamu'],'Tebak-tebakan',()=>subj(${i}))">🧩 Tebak-tebakan</button></div>`;scrollTo(0,0)}
+
+function setup(multi){app.innerHTML=`<button class="back" onclick="home()">← Beranda</button><h1>${multi?'👥 Main Bersama':'🎯 Kuis Acak'}</h1>
+<div class="box">${multi?`<p class="m">Satu HP bergantian! Isi 2–4 nama pemain. Soal campuran semua mapel, benar = +10 poin.</p><div id="ns"><input placeholder="Pemain 1"><input placeholder="Pemain 2"></div><button class="btn ghost" onclick="if($('#ns').children.length<4)$('#ns').insertAdjacentHTML('beforeend','<input placeholder=Pemain '+($('#ns').children.length+1)+'>')">+ Tambah pemain</button>`:`<p class="m">10 soal acak dari semua mapel (pilihan ganda, isian, dan tebak-tebakan).</p>`}
+<div class="row"><button class="btn" onclick="go(${multi})">Mulai!</button></div></div>`}
+function go(multi){let pl=['Kamu'];if(multi){pl=[...document.querySelectorAll('#ns input')].map((x,i)=>x.value.trim()||'Pemain '+(i+1))}
+const n=multi?pl.length*4:10;play(sh(S.flatMap(all)).slice(0,n),pl,multi?'Main Bersama':'Kuis Acak',home)}
+
+function play(list,pl,title,back){let i=0,sc=pl.map(()=>0),lock=false;
+function show(){if(i>=list.length)return end();const it=list[i],p=i%pl.length;lock=false;
+app.innerHTML=`<button class="back" id="bk">← Keluar</button><h2>${title}</h2>
+${pl.length>1?`<div class="pl">${pl.map((n,j)=>`<i class="${j==p?'on':''}">${n}: ${sc[j]}</i>`).join('')}</div>`:''}
+<div class="bar"><div style="width:${i/list.length*100}%"></div></div>
+<div class="box"><p class="m">Soal ${i+1}/${list.length}${it.k?' · '+it.k:''}${pl.length>1?' · Giliran <b>'+pl[p]+'</b>':''}</p><h2>${it.q}</h2>
+${it.o?it.o.map((o,j)=>`<button class="opt" data-j="${j}">${'ABCD'[j]}. ${o}</button>`).join(''):`<input id="in" placeholder="Ketik jawabanmu" autocomplete="off"><button class="btn" id="ck">Cek</button>`}
+<div id="fb"></div></div>`;
+$('#bk').onclick=back;
+const fin=ok=>{if(lock)return;lock=true;if(ok)sc[p]+=10;
+$('#fb').innerHTML=`<p class="fb ${ok?'ok':'no'}">${ok?'✅ Benar! +10':'❌ Salah.'}${it.o?'':' Jawaban: '+it.a.split('/')[0]}</p><button class="btn" id="nx">${i+1<list.length?'Lanjut →':'Lihat Hasil'}</button>`;
+$('#nx').onclick=()=>{i++;show()}};
+if(it.o)document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(lock)return;const j=+b.dataset.j;b.classList.add(j==it.a?'ok':'no');document.querySelectorAll('.opt')[it.a].classList.add('ok');fin(j==it.a)});
+else{const c=()=>fin(it.a.split('/').some(x=>nm(x)==nm($('#in').value)));$('#ck').onclick=c;$('#in').onkeydown=e=>{if(e.key=='Enter')c()}}}
+function end(){const mx=Math.max(...sc),w=pl.filter((n,j)=>sc[j]==mx);
+app.innerHTML=`<div class="hero"><h1>🏆 Selesai!</h1><p>${pl.length>1?'Pemenang: <b>'+w.join(' & ')+'</b>':'Skor kamu: '+sc[0]+' / '+list.length*10}</p></div>
+<div class="box">${pl.map((n,j)=>`<p><b>${n}</b>: ${sc[j]} poin</p>`).join('')}${pl.length==1?`<p class="m">${sc[0]>=list.length*8?'Mantap, kompeten! 🔥':sc[0]>=list.length*6?'Bagus, terus berlatih 💪':'Baca materinya lagi ya 📚'}</p>`:''}</div>
+<div class="row"><button class="btn" id="ag">Main Lagi</button><button class="btn ghost" id="hm">Beranda</button></div>`;
+$('#ag').onclick=()=>play(sh(list),pl,title,back);$('#hm').onclick=home}
+show();scrollTo(0,0)}
+function galeri(){app.innerHTML=`<button class="back" onclick="home()">← Beranda</button><h1>🔌 Galeri Komponen</h1><div class="grid">${G.map(g=>`<div class="card" style="cursor:default"><div style="color:var(--t)">${g[2]}</div><b>${g[0]}</b><span class="m" style="font-size:.85rem">${g[1]}</span></div>`).join('')}</div>`;scrollTo(0,0)}
+function ujian(){app.innerHTML=`<button class="back" onclick="home()">← Beranda</button><h1>📝 Simulasi Ujian</h1><div class="box"><p class="m">Soal campuran (PG, isian, tebakan). Jawaban benar ditampilkan setelah menjawab.</p><div class="row"><button class="btn" onclick="ex(1)">Semester 1</button><button class="btn" onclick="ex(2)">Semester 2</button><button class="btn alt" onclick="ex(3)">Ujian Akhir</button></div></div>`;scrollTo(0,0)}
+function ex(k){const q=S.flatMap(s=>{const p=pg(s,s.n);return k==1?[...p.slice(0,2),...fi(s,s.n,'f')]:k==2?[...p.slice(2),...fi(s,s.n,'t')]:all(s)});play(sh(q).slice(0,k==3?30:20),['Kamu'],'Simulasi Ujian',ujian)}
+home();
+</script></body></html>
